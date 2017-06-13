@@ -1,0 +1,551 @@
+Attribute VB_Name = "define_listview"
+Option Explicit
+
+Public Const WC_LISTVIEW = "SysListView32"
+
+Public Const LVS_ALIGNTOP = &H0
+Public Const LVS_ICON = &H0
+Public Const LVS_REPORT = &H1
+Public Const LVS_SMALLICON = &H2
+Public Const LVS_LIST = &H3
+Public Const LVS_TYPEMASK = &H3
+Public Const LVS_SINGLESEL = &H4
+Public Const LVS_SHOWSELALWAYS = &H8
+Public Const LVS_SORTASCENDING = &H10
+Public Const LVS_SORTDESCENDING = &H20
+Public Const LVS_SHAREIMAGELISTS = &H40
+Public Const LVS_NOLABELWRAP = &H80
+Public Const LVS_AUTOARRANGE = &H100
+Public Const LVS_EDITLABELS = &H200
+Public Const LVS_OWNERDRAWFIXED = &H400
+Public Const LVS_ALIGNLEFT = &H800
+Public Const LVS_ALIGNMASK = &HC00
+Public Const LVS_OWNERDATA = &H1000
+Public Const LVS_NOSCROLL = &H2000
+Public Const LVS_NOCOLUMNHEADER = &H4000
+Public Const LVS_NOSORTHEADER = &H18000 - &H10000
+Public Const LVS_TYPESTYLEMASK = &H1FC00 - &H10000
+
+Public Const LVIS_FOCUSED = &H1
+Public Const LVIS_SELECTED = &H2
+Public Const LVIS_CUT = &H4
+Public Const LVIS_DROPHILITED = &H8
+Public Const LVIS_ACTIVATING = &H20
+Public Const LVIS_OVERLAYMASK = &HF00
+Public Const LVIS_STATEIMAGEMASK = &H1F000 - &H10000
+
+Public Const LVS_EX_GRIDLINES = &H1
+Public Const LVS_EX_SUBITEMIMAGES = &H2
+Public Const LVS_EX_CHECKBOXES = &H4
+Public Const LVS_EX_TRACKSELECT = &H8
+Public Const LVS_EX_HEADERDRAGDROP = &H10
+Public Const LVS_EX_FULLROWSELECT = &H20
+Public Const LVS_EX_ONECLICKACTIVATE = &H40
+Public Const LVS_EX_TWOCLICKACTIVATE = &H80
+Public Const LVS_EX_FLATSB = &H100
+Public Const LVS_EX_REGIONAL = &H200
+Public Const LVS_EX_INFOTIP = &H400
+Public Const LVS_EX_UNDERLINEHOT = &H800
+Public Const LVS_EX_UNDERLINECOLD = &H1000
+Public Const LVS_EX_MULTIWORKAREAS = &H2000
+Public Const LVS_EX_LABELTIP = &H4000
+Public Const LVS_EX_BORDERSELECT = &H18000 - &H10000
+Public Const LVS_EX_DOUBLEBUFFER = &H10000
+Public Const LVS_EX_HIDELABELS = &H20000
+Public Const LVS_EX_SINGLEROW = &H40000
+Public Const LVS_EX_SNAPTOGRID = &H80000
+Public Const LVS_EX_SIMPLESELECT = &H100000
+Public Const LVS_EX_JUSTIFYCOLUMNS = &H200000
+Public Const LVS_EX_TRANSPARENTBKGND = &H400000
+Public Const LVS_EX_TRANSPARENTSHADOWTEXT = &H800000
+Public Const LVS_EX_AUTOAUTOARRANGE = &H1000000
+Public Const LVS_EX_HEADERINALLVIEWS = &H2000000
+Public Const LVS_EX_AUTOCHECKSELECT = &H8000000
+Public Const LVS_EX_AUTOSIZECOLUMNS = &H10000000
+Public Const LVS_EX_COLUMNSNAPPOINTS = &H40000000
+Public Const LVS_EX_COLUMNOVERFLOW = &H80000000
+
+Public Const LVCF_FMT = &H1
+Public Const LVCF_WIDTH = &H2
+Public Const LVCF_TEXT = &H4
+Public Const LVCF_SUBITEM = &H8
+Public Const LVCF_IMAGE = &H10
+Public Const LVCF_ORDER = &H20
+
+Public Const LVCFMT_LEFT = &H0
+Public Const LVCFMT_RIGHT = &H1
+Public Const LVCFMT_CENTER = &H2
+Public Const LVCFMT_JUSTIFYMASK = &H3
+Public Const LVCFMT_FIXED_WIDTH = &H100
+Public Const LVCFMT_IMAGE = &H800
+Public Const LVCFMT_BITMAP_ON_RIGHT = &H1000
+Public Const LVCFMT_COL_HAS_IMAGES = &H18000 - &H10000
+Public Const LVCFMT_NO_DPI_SCALE = &H40000
+Public Const LVCFMT_FIXED_RATIO = &H80000
+Public Const LVCFMT_LINE_BREAK = &H100000
+Public Const LVCFMT_FILL = &H200000
+Public Const LVCFMT_WRAP = &H400000
+Public Const LVCFMT_NO_TITLE = &H800000
+Public Const LVCFMT_SPLIT_BUTTON = &H1000000
+Public Const LVCFMT_TILE_PLACEMENTMASK = LVCFMT_LINE_BREAK Or LVCFMT_FILL
+
+Public Const LVSIL_NORMAL = 0
+Public Const LVSIL_SMALL = 1
+Public Const LVSIL_STATE = 2
+
+Public Const LVSICF_NOINVALIDATEALL = &H1
+Public Const LVSICF_NOSCROLL = &H2
+
+Public Const LVFI_PARAM = &H1
+Public Const LVFI_STRING = &H2
+Public Const LVFI_PARTIAL = &H8
+Public Const LVFI_WRAP = &H20
+Public Const LVFI_NEARESTXY = &H40
+
+Public Const LVIF_TEXT = &H1
+Public Const LVIF_IMAGE = &H2
+Public Const LVIF_PARAM = &H4
+Public Const LVIF_STATE = &H8
+Public Const LVIF_INDENT = &H10
+Public Const LVIF_GROUPID = &H100
+Public Const LVIF_COLUMNS = &H200
+Public Const LVIF_NORECOMPUTE = &H800
+Public Const LVIF_DI_SETITEM = &H1000
+Public Const LVIF_COLFMT = &H10000
+
+Public Const LVIR_BOUNDS = &H0
+Public Const LVIR_ICON = &H1
+Public Const LVIR_LABEL = &H2
+Public Const LVIR_SELECTBOUNDS = &H3
+
+Public Const LVNI_ALL = &H0
+Public Const LVNI_FOCUSED = &H1
+Public Const LVNI_SELECTED = &H2
+Public Const LVNI_CUT = &H4
+Public Const LVNI_DROPHILITED = &H8
+
+Public Const LVNI_ABOVE = &H100
+Public Const LVNI_BELOW = &H200
+Public Const LVNI_TOLEFT = &H400
+Public Const LVNI_TORIGHT = &H800
+
+Public Const LVHT_NOWHERE = &H1
+Public Const LVHT_ONITEMICON = &H2
+Public Const LVHT_ONITEMLABEL = &H4
+Public Const LVHT_ONITEMSTATEICON = &H8
+Public Const LVHT_ONITEM = LVHT_ONITEMICON Or LVHT_ONITEMLABEL Or LVHT_ONITEMSTATEICON
+
+Public Const LVHT_ABOVE = &H8
+Public Const LVHT_BELOW = &H10
+Public Const LVHT_TORIGHT = &H20
+Public Const LVHT_TOLEFT = &H40
+
+Public Const LV_VIEW_ICON = &H0
+Public Const LV_VIEW_DETAILS = &H1
+Public Const LV_VIEW_SMALLICON = &H2
+Public Const LV_VIEW_LIST = &H3
+Public Const LV_VIEW_TILE = &H4
+Public Const LV_VIEW_MAX = &H4
+
+Public Const LVGF_NONE = &H0
+Public Const LVGF_HEADER = &H1
+Public Const LVGF_FOOTER = &H2
+Public Const LVGF_STATE = &H4
+Public Const LVGF_ALIGN = &H8
+Public Const LVGF_GROUPID = &H10
+Public Const LVGF_SUBTITLE = &H100
+Public Const LVGF_TASK = &H200
+Public Const LVGF_DESCRIPTIONTOP = &H400
+Public Const LVGF_DESCRIPTIONBOTTOM = &H800
+Public Const LVGF_TITLEIMAGE = &H1000
+Public Const LVGF_EXTENDEDIMAGE = &H2000
+Public Const LVGF_ITEMS = &H4000
+Public Const LVGF_SUBSET = &H18000 - &H10000
+Public Const LVGF_SUBSETITEMS = &H10000
+
+Public Const LVGS_NORMAL = &H0
+Public Const LVGS_COLLAPSED = &H1
+Public Const LVGS_HIDDEN = &H2
+Public Const LVGS_NOHEADER = &H4
+Public Const LVGS_COLLAPSIBLE = &H8
+Public Const LVGS_FOCUSED = &H10
+Public Const LVGS_SELECTED = &H20
+Public Const LVGS_SUBSETED = &H40
+Public Const LVGS_SUBSETLINKFOCUSED = &H80
+
+Public Const LVGA_HEADER_LEFT = &H1
+Public Const LVGA_HEADER_CENTER = &H2
+Public Const LVGA_HEADER_RIGHT = &H4
+Public Const LVGA_FOOTER_LEFT = &H8
+Public Const LVGA_FOOTER_CENTER = &H10
+Public Const LVGA_FOOTER_RIGHT = &H20
+
+Public Const LVGMF_NONE = &H0
+Public Const LVGMF_BORDERSIZE = &H1
+Public Const LVGMF_BORDERCOLOR = &H2
+Public Const LVGMF_TEXTCOLOR = &H4
+
+Public Const LVTVIF_AUTOSIZE = &H0
+Public Const LVTVIF_FIXEDWIDTH = &H1
+Public Const LVTVIF_FIXEDHEIGHT = &H2
+Public Const LVTVIF_FIXEDSIZE = &H3
+Public Const LVTVIF_EXTENDED = &H4
+
+Public Const LVTVIM_TILESIZE = &H1
+Public Const LVTVIM_COLUMNS = &H2
+Public Const LVTVIM_LABELMARGIN = &H4
+
+Public Const LVIM_AFTER = &H1
+
+Public Const LVM_FIRST = &H1000
+Public Const LVM_GETBKCOLOR = LVM_FIRST + 0
+Public Const LVM_SETBKCOLOR = LVM_FIRST + 1
+Public Const LVM_GETIMAGELIST = LVM_FIRST + 2
+Public Const LVM_SETIMAGELIST = LVM_FIRST + 3
+Public Const LVM_GETITEMCOUNT = LVM_FIRST + 4
+Public Const LVM_GETITEMA = LVM_FIRST + 5
+Public Const LVM_GETITEMW = LVM_FIRST + 75
+Public Const LVM_GETITEM = LVM_GETITEMW
+Public Const LVM_SETITEMA = LVM_FIRST + 6
+Public Const LVM_SETITEMW = LVM_FIRST + 76
+Public Const LVM_SETITEM = LVM_SETITEMW
+Public Const LVM_INSERTITEMA = LVM_FIRST + 7
+Public Const LVM_INSERTITEMW = LVM_FIRST + 77
+Public Const LVM_INSERTITEM = LVM_INSERTITEMW
+Public Const LVM_DELETEITEM = LVM_FIRST + 8
+Public Const LVM_DELETEALLITEMS = LVM_FIRST + 9
+Public Const LVM_GETCALLBACKMASK = LVM_FIRST + 10
+Public Const LVM_SETCALLBACKMASK = LVM_FIRST + 11
+Public Const LVM_GETNEXTITEM = LVM_FIRST + 12
+Public Const LVM_FINDITEMA = LVM_FIRST + 13
+Public Const LVM_FINDITEMW = LVM_FIRST + 83
+Public Const LVM_FINDITEM = LVM_FINDITEMW
+Public Const LVM_GETITEMRECT = LVM_FIRST + 14
+Public Const LVM_SETITEMPOSITION = LVM_FIRST + 15
+Public Const LVM_GETITEMPOSITION = LVM_FIRST + 16
+Public Const LVM_GETSTRINGWIDTHA = LVM_FIRST + 17
+Public Const LVM_GETSTRINGWIDTHW = LVM_FIRST + 87
+Public Const LVM_GETSTRINGWIDTH = LVM_GETSTRINGWIDTHW
+Public Const LVM_HITTEST = LVM_FIRST + 18
+Public Const LVM_ENSUREVISIBLE = LVM_FIRST + 19
+Public Const LVM_SCROLL = LVM_FIRST + 20
+Public Const LVM_REDRAWITEMS = LVM_FIRST + 21
+Public Const LVM_ARRANGE = LVM_FIRST + 22
+Public Const LVM_EDITLABELA = LVM_FIRST + 23
+Public Const LVM_EDITLABELW = LVM_FIRST + 118
+Public Const LVM_EDITLABEL = LVM_EDITLABELW
+Public Const LVM_GETEDITCONTROL = LVM_FIRST + 24
+Public Const LVM_GETCOLUMNA = LVM_FIRST + 25
+Public Const LVM_GETCOLUMNW = LVM_FIRST + 95
+Public Const LVM_GETCOLUMN = LVM_GETCOLUMNW
+Public Const LVM_SETCOLUMNA = LVM_FIRST + 26
+Public Const LVM_SETCOLUMNW = LVM_FIRST + 96
+Public Const LVM_SETCOLUMN = LVM_SETCOLUMNW
+Public Const LVM_INSERTCOLUMNA = LVM_FIRST + 27
+Public Const LVM_INSERTCOLUMNW = LVM_FIRST + 97
+Public Const LVM_INSERTCOLUMN = LVM_INSERTCOLUMNW
+Public Const LVM_DELETECOLUMN = LVM_FIRST + 28
+Public Const LVM_GETCOLUMNWIDTH = LVM_FIRST + 29
+Public Const LVM_SETCOLUMNWIDTH = LVM_FIRST + 30
+Public Const LVM_GETHEADER = LVM_FIRST + 31
+
+Public Const LVM_CREATEDRAGIMAGE = LVM_FIRST + 33
+Public Const LVM_GETVIEWRECT = LVM_FIRST + 34
+Public Const LVM_GETTEXTCOLOR = LVM_FIRST + 35
+Public Const LVM_SETTEXTCOLOR = LVM_FIRST + 36
+Public Const LVM_GETTEXTBKCOLOR = LVM_FIRST + 37
+Public Const LVM_SETTEXTBKCOLOR = LVM_FIRST + 38
+Public Const LVM_GETTOPINDEX = LVM_FIRST + 39
+Public Const LVM_GETCOUNTPERPAGE = LVM_FIRST + 40
+Public Const LVM_GETORIGIN = LVM_FIRST + 41
+Public Const LVM_UPDATE = LVM_FIRST + 42
+Public Const LVM_SETITEMSTATE = LVM_FIRST + 43
+Public Const LVM_GETITEMSTATE = LVM_FIRST + 44
+Public Const LVM_GETITEMTEXTA = LVM_FIRST + 45
+Public Const LVM_GETITEMTEXTW = LVM_FIRST + 115
+Public Const LVM_GETITEMTEXT = LVM_GETITEMTEXTW
+Public Const LVM_SETITEMTEXTA = LVM_FIRST + 46
+Public Const LVM_SETITEMTEXTW = LVM_FIRST + 116
+Public Const LVM_SETITEMTEXT = LVM_SETITEMTEXTW
+Public Const LVM_SETITEMCOUNT = LVM_FIRST + 47
+Public Const LVM_SORTITEMS = LVM_FIRST + 48
+Public Const LVM_SETITEMPOSITION32 = LVM_FIRST + 49
+Public Const LVM_GETSELECTEDCOUNT = LVM_FIRST + 50
+Public Const LVM_GETITEMSPACING = LVM_FIRST + 51
+Public Const LVM_GETISEARCHSTRINGA = LVM_FIRST + 52
+Public Const LVM_GETISEARCHSTRINGW = LVM_FIRST + 117
+Public Const LVM_GETISEARCHSTRING = LVM_GETISEARCHSTRINGW
+Public Const LVM_SETICONSPACING = LVM_FIRST + 53
+Public Const LVM_SETEXTENDEDLISTVIEWSTYLE = LVM_FIRST + 54
+Public Const LVM_GETEXTENDEDLISTVIEWSTYLE = LVM_FIRST + 55
+Public Const LVM_GETSUBITEMRECT = LVM_FIRST + 56
+Public Const LVM_SUBITEMHITTEST = LVM_FIRST + 57
+Public Const LVM_SETCOLUMNORDERARRAY = LVM_FIRST + 58
+Public Const LVM_GETCOLUMNORDERARRAY = LVM_FIRST + 59
+Public Const LVM_SETHOTITEM = LVM_FIRST + 60
+Public Const LVM_GETHOTITEM = LVM_FIRST + 61
+Public Const LVM_SETHOTCURSOR = LVM_FIRST + 62
+Public Const LVM_GETHOTCURSOR = LVM_FIRST + 63
+Public Const LVM_APPROXIMATEVIEWRECT = LVM_FIRST + 64
+Public Const LVM_SETWORKAREAS = LVM_FIRST + 65
+Public Const LVM_GETSELECTIONMARK = LVM_FIRST + 66
+Public Const LVM_SETSELECTIONMARK = LVM_FIRST + 67
+Public Const LVM_SETBKIMAGEA = LVM_FIRST + 68
+Public Const LVM_SETBKIMAGEW = LVM_FIRST + 138
+Public Const LVM_SETBKIMAGE = LVM_SETBKIMAGEW
+Public Const LVM_GETBKIMAGEA = LVM_FIRST + 69
+Public Const LVM_GETBKIMAGEW = LVM_FIRST + 139
+Public Const LVM_GETBKIMAGE = LVM_GETBKIMAGEW
+Public Const LVM_GETWORKAREAS = LVM_FIRST + 70
+Public Const LVM_SETHOVERTIME = LVM_FIRST + 71
+Public Const LVM_GETHOVERTIME = LVM_FIRST + 72
+Public Const LVM_GETNUMBEROFWORKAREAS = LVM_FIRST + 73
+Public Const LVM_SETTOOLTIPS = LVM_FIRST + 74
+Public Const LVM_GETTOOLTIPS = LVM_FIRST + 78
+Public Const LVM_GETUNICODEFORMAT = CCM_GETUNICODEFORMAT
+Public Const LVM_SETUNICODEFORMAT = CCM_SETUNICODEFORMAT
+Public Const LVM_SETSELECTEDCOLUMN = LVM_FIRST + 140
+Public Const LVM_SETTILEWIDTH = LVM_FIRST + 141
+Public Const LVM_SETVIEW = LVM_FIRST + 142
+Public Const LVM_GETVIEW = LVM_FIRST + 143
+Public Const LVM_INSERTGROUP = LVM_FIRST + 145
+Public Const LVM_SETGROUPINFO = LVM_FIRST + 147
+Public Const LVM_GETGROUPINFO = LVM_FIRST + 149
+Public Const LVM_REMOVEGROUP = LVM_FIRST + 150
+Public Const LVM_MOVEGROUP = LVM_FIRST + 151
+Public Const LVM_MOVEITEMTOGROUP = LVM_FIRST + 154
+Public Const LVM_SETGROUPMETRICS = LVM_FIRST + 155
+Public Const LVM_GETGROUPMETRICS = LVM_FIRST + 156
+Public Const LVM_ENABLEGROUPVIEW = LVM_FIRST + 157
+Public Const LVM_SORTGROUPS = LVM_FIRST + 158
+Public Const LVM_INSERTGROUPSORTED = LVM_FIRST + 159
+Public Const LVM_REMOVEALLGROUPS = LVM_FIRST + 160
+Public Const LVM_HASGROUP = LVM_FIRST + 161
+Public Const LVM_SETTILEVIEWINFO = LVM_FIRST + 162
+Public Const LVM_GETTILEVIEWINFO = LVM_FIRST + 163
+Public Const LVM_SETTILEINFO = LVM_FIRST + 164
+Public Const LVM_GETTILEINFO = LVM_FIRST + 165
+Public Const LVM_SETINSERTMARK = LVM_FIRST + 166
+Public Const LVM_GETINSERTMARK = LVM_FIRST + 167
+Public Const LVM_INSERTMARKHITTEST = LVM_FIRST + 168
+Public Const LVM_GETINSERTMARKRECT = LVM_FIRST + 169
+Public Const LVM_SETINSERTMARKCOLOR = LVM_FIRST + 170
+Public Const LVM_GETINSERTMARKCOLOR = LVM_FIRST + 171
+Public Const LVM_SETINFOTIP = LVM_FIRST + 173
+Public Const LVM_GETSELECTEDCOLUMN = LVM_FIRST + 174
+Public Const LVM_ISGROUPVIEWENABLED = LVM_FIRST + 175
+Public Const LVM_GETOUTLINECOLOR = LVM_FIRST + 176
+Public Const LVM_SETOUTLINECOLOR = LVM_FIRST + 177
+Public Const LVM_CANCELEDITLABEL = LVM_FIRST + 179
+Public Const LVM_MAPINDEXTOID = LVM_FIRST + 180
+Public Const LVM_MAPIDTOINDEX = LVM_FIRST + 181
+
+Public Const LVN_FIRST = -100
+Public Const LVN_LAST = -199
+Public Const LVN_ITEMCHANGING = LVN_FIRST - 0
+Public Const LVN_ITEMCHANGED = LVN_FIRST - 1
+Public Const LVN_INSERTITEM = LVN_FIRST - 2
+Public Const LVN_DELETEITEM = LVN_FIRST - 3
+Public Const LVN_DELETEALLITEMS = LVN_FIRST - 4
+Public Const LVN_BEGINLABELEDITA = LVN_FIRST - 5
+Public Const LVN_BEGINLABELEDITW = LVN_FIRST - 75
+Public Const LVN_BEGINLABELEDIT = LVN_BEGINLABELEDITW
+Public Const LVN_ENDLABELEDITA = LVN_FIRST - 6
+Public Const LVN_ENDLABELEDITW = LVN_FIRST - 76
+Public Const LVN_ENDLABELEDIT = LVN_ENDLABELEDITW
+Public Const LVN_COLUMNCLICK = LVN_FIRST - 8
+Public Const LVN_BEGINDRAG = LVN_FIRST - 9
+Public Const LVN_BEGINRDRAG = LVN_FIRST - 11
+Public Const LVN_ODCACHEHINT = LVN_FIRST - 13
+Public Const LVN_ITEMACTIVATE = LVN_FIRST - 14
+Public Const LVN_ODSTATECHANGED = LVN_FIRST - 15
+Public Const LVN_HOTTRACK = LVN_FIRST - 21
+Public Const LVN_ODFINDITEMA = LVN_FIRST - 52
+Public Const LVN_ODFINDITEMW = LVN_FIRST - 79
+Public Const LVN_ODFINDITEM = LVN_ODFINDITEMW
+Public Const LVN_GETDISPINFOA = LVN_FIRST - 50
+Public Const LVN_GETDISPINFOW = LVN_FIRST - 77
+Public Const LVN_GETDISPINFO = LVN_GETDISPINFOW
+Public Const LVN_SETDISPINFOA = LVN_FIRST - 51
+Public Const LVN_SETDISPINFOW = LVN_FIRST - 78
+Public Const LVN_SETDISPINFO = LVN_SETDISPINFOW
+Public Const LVN_KEYDOWN = LVN_FIRST - 55
+Public Const LVN_MARQUEEBEGIN = LVN_FIRST - 56
+Public Const LVN_GETINFOTIPA = LVN_FIRST - 57
+Public Const LVN_GETINFOTIPW = LVN_FIRST - 58
+Public Const LVN_GETINFOTIP = LVN_GETINFOTIPW
+Public Const LVN_BEGINSCROLL = LVN_FIRST - 80
+Public Const LVN_ENDSCROLL = LVN_FIRST - 81
+Public Const LVN_LINKCLICK = LVN_FIRST - 84
+Public Const LVN_ASYNCDRAWN = LVN_FIRST - 86
+Public Const LVN_GETEMPTYMARKUP = LVN_FIRST - 87
+
+Public Const LVA_DEFAULT = &H0
+Public Const LVA_ALIGNLEFT = &H1
+Public Const LVA_ALIGNTOP = &H2
+Public Const LVA_SNAPTOGRID = &H5
+
+Public Const LVSCW_AUTOSIZE = -1
+Public Const LVSCW_AUTOSIZE_USEHEADER = -2
+
+
+Public Type LVGROUP
+    cbSize As Long
+    mask As Long
+    pszHeader As Long
+    cchHeader As Long
+    pszFooter As Long
+    cchFooter As Long
+    iGroupId As Long
+    stateMask As Long
+    state As Long
+    uAlign As Long
+    'pszSubtitle As Long
+    'cchSubtitle As Long
+    'pszTask As Long
+    'cchTask As Long
+    'pszDescriptionTop As Long
+    'cchDescriptionTop As Long
+    'pszDescriptionBottom As Long
+    'cchDescriptionBottom As Long
+    'iTitleImage As Long
+    'iExtendedImage As Long
+    'iFirstItem As Long
+    'cItems As Long
+    'pszSubsetTitle As Long
+    'cchSubsetTitle As Long
+End Type
+
+Public Type LVCOLUMN
+    mask As Long
+    fmt As Long
+    cx As Long
+    pszText As Long
+    cchTextMax As Long
+    iSubItem As Long
+    iImage As Long
+    iOrder As Long
+    cxMin As Long
+    cxDefault As Long
+    cxIdeal As Long
+End Type
+
+Public Type LVITEM
+    mask As Long
+    iItem As Long
+    iSubItem As Long
+    state As Long
+    stateMask As Long
+    pszText As Long
+    cchTextMax As Long
+    iImage As Long
+    lParam As Long
+    iIndent As Long
+    iGroupId As Long
+    cColumns As Long
+    puColumns As Long
+    piColFmt As Long
+    iGroup As Long
+End Type
+
+Public Type NMLISTVIEW
+    hdr As NMHDR
+    iItem As Long
+    iSubItem As Long
+    uNewState As Long
+    uOldState As Long
+    uChanged As Long
+    ptAction As POINTAPI
+    lParam As Long
+End Type
+
+Public Type NMITEMACTIVATE
+    hdr As NMHDR
+    iItem As Long
+    iSubItem As Long
+    uNewState As Long
+    uOldState As Long
+    uChanged As Long
+    ptAction As POINTAPI
+    lParam As Long
+    uKeyFlags As Long
+End Type
+
+Public Type LVBKIMAGE
+    ulFlags As Long
+    hbm As Long
+    pszImage As Long
+    cchImageMax As Long
+    xOffsetPercent As Long
+    yOffsetPercent As Long
+End Type
+
+Public Const LVBKIF_SOURCE_NONE = &H0
+Public Const LVBKIF_SOURCE_HBITMAP = &H1
+Public Const LVBKIF_SOURCE_URL = &H2
+Public Const LVBKIF_STYLE_NORMAL = &H0
+Public Const LVBKIF_STYLE_TILE = &H10
+Public Const LVBKIF_FLAG_TILEOFFSET = &H100
+Public Const LVBKIF_TYPE_WATERMARK = &H10000000
+
+Public Type LVTILEVIEWINFO
+    cbSize As Long
+    dwMask As Long
+    dwFlags As Long
+    sizeWidth As Long
+    sizeHeight As Long
+    cLines As Long
+    rcLabelMargin As RECT
+End Type
+
+Public Type LVTILEINFO
+    cbSize As Long
+    iItem As Long
+    cColumns As Long
+    puColumns As Long
+End Type
+
+Public Type NMLVKEYDOWN
+    hdr As NMHDR
+    wVKey As Long
+    flags As Long
+End Type
+
+Public Type NMLVCUSTOMDRAW
+    nmcd As NMCUSTOMDRAW
+    clrText As Long
+    clrTextBk As Long
+    iSubItem As Long
+    dwItemType As Long
+    clrFace As Long
+    iIconEffect As Long
+    iIconPhase As Long
+    iPartId As Long
+    iStateId As Long
+    rcText As RECT
+    uAlign As Long
+End Type
+
+
+Public Type LVFINDINFO
+    flags As Long
+    psz As Long
+    lParam As Long
+    pt As POINTAPI
+    vkDirection As Long
+End Type
+
+Public Type LVGROUPMETRICS
+    cbSize As Long
+    mask As Long
+    Left As Long
+    Top As Long
+    Right As Long
+    Bottom As Long
+    crLeft As Long
+    crTop As Long
+    crRight As Long
+    crBottom As Long
+    crHeader As Long
+    crFooter As Long
+End Type
